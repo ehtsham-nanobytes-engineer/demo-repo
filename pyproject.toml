@@ -1,0 +1,43 @@
+[project]
+name = "linkedin-post-automation"
+version = "0.1.0"
+description = "FastAPI service that turns a niche into a ready-to-post LinkedIn post"
+readme = "README.md"
+authors = [
+    { name = "rayyan.nbt", email = "rayyan.nbt@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "cloudinary>=1.41",
+    "fastapi>=0.115",
+    "httpx>=0.27",
+    "langchain>=0.3.14",
+    "langchain-core>=0.3.29",
+    "langchain-openrouter>=0.2.8",
+    "langchain-tavily>=0.1",
+    "openai>=3.31.0",
+    "openrouter>=0.11.46",
+    "pillow>=11.0",
+    "psycopg[binary]>=3.2",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "uvicorn[standard]>=0.32",
+    "vercel-queue>=0.1",
+]
+
+[tool.uv]
+package = false
+
+# Vercel: the FastAPI app is found at app/main.py; this is the private queue
+# consumer it generates a function for at build time (app/queue_consumer.py).
+[[tool.vercel.subscribers]]
+entrypoint = "app.queue_consumer"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

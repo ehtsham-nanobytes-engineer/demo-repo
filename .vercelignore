@@ -1,0 +1,15 @@
+# Never upload local secrets: pydantic-settings would read a bundled .env at
+# runtime and production would quietly run on development credentials.
+.env
+.env.*
+!.env.example
+
+# Not needed by the API at runtime. assets/ (the logos) and app/prompts/ are
+# required and must NOT be listed here.
+.venv
+tests
+docs
+scripts
+migrations
+frontend/node_modules
+frontend/dist
