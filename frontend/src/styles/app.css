@@ -1,0 +1,1015 @@
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- header ---------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* The product name, top left: a gradient tile with a send glyph, then the
+   name with "Studio" carried in the accent. No image files. */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.wordmark-glyph {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-alt));
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--brand) 35%, transparent);
+}
+
+.wordmark-text {
+  font-size: 19px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.wordmark-text strong {
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--accent-text), var(--brand-alt));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.theme-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 550;
+  color: var(--text-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px 7px 12px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.theme-label { line-height: 1; }
+
+/* ---------- layout ---------- */
+
+.main {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 28px 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  text-align: center;
+  padding: 18px;
+  font-size: 12px;
+  color: var(--text-4);
+}
+
+/* ---------- niche bar ---------- */
+
+/* The accent hairline along the top edge (indigo through violet into LinkedIn
+   blue) is a background layer, clipped by the radius on its own. No
+   overflow: hidden, so the brand picker's menu can hang below the bar. */
+.niche-bar {
+  position: relative;
+  z-index: 2;
+  background:
+    linear-gradient(90deg, var(--brand), var(--brand-alt) 45%, var(--linkedin))
+      top / 100% 3px no-repeat,
+    var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.niche-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-4);
+}
+
+.niche-input {
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  background: var(--surface-sunk);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.niche-input:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.niche-input:disabled { opacity: 0.6; }
+.niche-input::placeholder { color: var(--text-4); }
+
+/* ---------- platform picks (write for LinkedIn / Meta) ---------- */
+
+.platform-picks {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.platform-picks legend {
+  float: left;
+  margin-right: 8px;
+  padding: 0;
+}
+
+.pick {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px 9px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-sunk);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+.pick:hover { border-color: var(--accent-line); }
+.pick.is-on { border-color: var(--accent); background: var(--accent-soft); }
+.pick:focus-within { box-shadow: 0 0 0 3px var(--accent-soft); }
+.platform-picks:disabled .pick { opacity: 0.6; cursor: not-allowed; }
+
+.pick-text { display: flex; flex-direction: column; gap: 2px; font-size: 13.5px; font-weight: 620; }
+.pick-text small { font-size: 11.5px; font-weight: 450; color: var(--text-4); }
+
+/* The real checkbox stays in the DOM for keyboard and screen readers; the
+   square beside it is what is drawn. Shared with the publish grid. */
+.pick input,
+.publish-check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.pick-box {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  display: inline-grid;
+  place-items: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+input:checked + .pick-box {
+  background: var(--brand-strong);
+  border-color: var(--brand-deep);
+}
+
+input:checked + .pick-box::after {
+  content: "";
+  width: 5px;
+  height: 9px;
+  border: solid var(--on-accent);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+input:focus-visible + .pick-box { box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---------- brand picker (which brands this post is for) ---------- */
+
+.picks-divider { margin-left: 8px; }
+
+.picks-locked { font-size: 12px; color: var(--text-4); }
+
+.brand-picker { position: relative; min-width: 0; }
+
+.brand-picker-button {
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 340px;
+  padding: 11px 12px 11px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-sunk);
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 620;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.brand-picker-button:hover:not(:disabled) { border-color: var(--accent-line); }
+.brand-picker-button[aria-expanded="true"] {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.brand-picker-button:disabled { opacity: 0.6; cursor: not-allowed; }
+.brand-picker-button.is-empty { color: var(--danger); border-color: var(--danger-line); }
+
+.brand-picker-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.brand-picker-caret { flex: none; font-size: 11px; color: var(--text-4); }
+
+.brand-picker-menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 240px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.brand-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.brand-option:hover { background: var(--surface-sunk); }
+.brand-option input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.brand-option.is-blocked { opacity: 0.5; cursor: not-allowed; }
+.brand-option-name { flex: 1; }
+.brand-option-logo { height: 18px; width: auto; display: block; }
+
+/* ---------- panels ---------- */
+
+/* LinkedIn and Meta stacked, each at full width, so both read at the same
+   comfortable line length. */
+.post-panels { display: flex; flex-direction: column; gap: 20px; }
+
+.panel-title .tag { text-transform: none; letter-spacing: 0; font-weight: 550; }
+.panel-head { flex-wrap: wrap; gap: 10px; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Section marker. */
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--brand-alt));
+  display: inline-block;
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.panel-meta { display: flex; align-items: center; gap: 10px; }
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+/* ---------- post editor ---------- */
+
+.post-editor {
+  width: 100%;
+  min-height: 360px;
+  resize: vertical;
+  font-family: var(--font-post);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--surface-sunk);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  white-space: pre-wrap;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.post-editor:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.post-editor-short { min-height: 150px; }
+
+.empty-compact { padding: 36px 22px; }
+
+.counter {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-4);
+}
+
+.counter.is-near { color: var(--warn); }
+.counter.is-over { color: var(--danger); font-weight: 700; }
+
+.hint { font-size: 12.5px; margin: 10px 0 0; }
+.hint-warn { color: var(--danger); }
+
+/* ---------- image ---------- */
+
+/* The frame holds the feed ratio, so what is reviewed is framed the way
+   LinkedIn will frame it. */
+.image-frame {
+  position: relative;
+  aspect-ratio: 1200 / 627;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-sunk);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* The loading and empty states span the row the brand cards will fill. */
+.image-frame-wide { aspect-ratio: 3.4 / 1; }
+
+/* The same picture once per selected brand. Side by side so the only
+   difference — the logo — is what the eye compares. `--columns` is the
+   number of brands (1–3), so one brand gets a frame worth looking at. */
+.brand-images {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 3), minmax(0, 1fr));
+  gap: 14px;
+}
+
+.brand-image { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+
+.brand-image figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 620;
+  color: var(--text-2);
+}
+
+.brand-image figcaption a {
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--text-4);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.brand-image figcaption a:hover { color: var(--text); }
+
+.image-placeholder-error { padding: 14px; gap: 6px; }
+.image-placeholder-error strong { color: var(--danger); font-size: 13px; }
+.image-placeholder-error p { font-size: 11.5px; word-break: break-word; }
+
+.image-working,
+.image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  text-align: center;
+  padding: 26px;
+  color: var(--text-3);
+  font-size: 13.5px;
+}
+
+.image-working small { color: var(--text-4); font-size: 12px; }
+.image-placeholder strong { font-size: 14.5px; color: var(--text-2); }
+.image-placeholder p { margin: 0; font-size: 13px; max-width: 44ch; color: var(--text-4); }
+
+/* A small grid of squares and circles, as an empty-state glyph. */
+.empty-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 11px);
+  gap: 7px;
+  margin-bottom: 8px;
+}
+
+.empty-grid span {
+  width: 11px;
+  height: 11px;
+  background: var(--accent-line);
+}
+
+.empty-grid .ci { border-radius: 50%; }
+.empty-grid .sq { border-radius: 2px; background: var(--brand); }
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 9px;
+  padding: 60px 26px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunk);
+}
+
+.empty strong { font-size: 14.5px; }
+.empty p { margin: 0; font-size: 13px; color: var(--text-4); max-width: 48ch; line-height: 1.55; }
+
+/* ---------- brief, read-only ---------- */
+
+.brief { margin-top: 14px; }
+
+.brief-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12.5px;
+  color: var(--text-4);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+
+.brief-toggle:hover { color: var(--text-2); }
+
+.brief-text {
+  margin: 11px 0 0;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--text-3);
+  background: var(--surface-sunk);
+  border-left: 2px solid var(--brand);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 12px 15px;
+}
+
+/* ---------- brief editor ---------- */
+
+.brief-editor {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-lg);
+  background: var(--accent-soft);
+}
+
+.field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+
+.field-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 450;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-4);
+}
+
+.brief-input {
+  width: 100%;
+  resize: vertical;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.brief-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.brief-input::placeholder { color: var(--text-4); }
+
+.brief-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.brief-tip {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-4);
+  flex: 1 1 22ch;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 560;
+  line-height: 1;
+  padding: 11px 16px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s,
+    box-shadow 0.15s, transform 0.06s;
+}
+
+.btn:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: 0.42; cursor: not-allowed; }
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--brand), var(--brand-strong));
+  color: var(--on-accent);
+  border-color: var(--brand-deep);
+  box-shadow: var(--shadow-sm), 0 6px 18px color-mix(in srgb, var(--brand) 28%, transparent);
+  font-weight: 650;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, var(--brand-strong), var(--brand-deep));
+}
+
+.btn-solid {
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+
+.btn-solid:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border-color: var(--line-strong);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+/* The "same brief" tag: marks the cheap retry without needing a tooltip. */
+.btn-note {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-4);
+  background: var(--surface-sunk);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 6px;
+}
+
+/* ---------- tags ---------- */
+
+.tag {
+  font-size: 11px;
+  font-weight: 620;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: var(--text-4);
+  background: var(--surface-sunk);
+  border: 1px solid var(--line);
+}
+
+.tag-edit {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+
+/* ---------- banners ---------- */
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  padding: 13px 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid;
+}
+
+.banner-error { color: var(--danger); background: var(--danger-soft); border-color: var(--danger-line); }
+.banner-info { color: var(--text-2); background: var(--accent-soft); border-color: var(--accent-line); }
+
+.banner-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 19px;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.banner-close:hover { opacity: 1; }
+
+/* ---------- publish ---------- */
+
+.publish-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: linear-gradient(135deg, var(--ink), #0b0d1f);
+  color: #fff;
+  border-radius: var(--radius-xl);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.publish-copy strong { font-size: 14.5px; }
+.publish-copy p {
+  margin: 5px 0 0;
+  font-size: 12.5px;
+  color: #aab0cf;
+  line-height: 1.55;
+  max-width: 64ch;
+}
+
+/* One row per brand, one column per platform. */
+.publish-grid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.publish-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.4fr) repeat(3, minmax(0, 1fr));
+  align-items: center;
+  padding: 12px 16px;
+  gap: 10px;
+}
+
+.publish-row + .publish-row { border-top: 1px solid rgba(255, 255, 255, 0.07); }
+
+/* A brand not picked for this post: still listed, so it is clear it exists,
+   but nothing in the row can be ticked. */
+.publish-row.is-excluded { opacity: 0.4; }
+
+.publish-row-head {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #9097ba;
+}
+
+.publish-row-head span:not(:first-child),
+.publish-cell { text-align: center; justify-self: center; }
+
+.publish-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 620;
+}
+
+/* The brand's own mark, small. Sits on a light chip because most logos are
+   drawn for a white page, and this panel is dark. */
+.publish-logo {
+  height: 30px;
+  width: auto;
+  max-width: 96px;
+  object-fit: contain;
+  padding: 4px 8px;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.publish-logo-missing {
+  display: inline-grid;
+  place-items: center;
+  min-width: 38px;
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: #dfe2f0;
+}
+
+.publish-cell {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-height: 36px;
+  justify-content: center;
+}
+
+.publish-check {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.publish-check:hover { background: rgba(255, 255, 255, 0.06); }
+.publish-check .pick-box { width: 20px; height: 20px; background: transparent; border-color: #5d6488; }
+.publish-check.is-blocked { cursor: not-allowed; opacity: 0.35; }
+.publish-check.is-blocked:hover { background: none; }
+
+.status { font-size: 11px; font-weight: 650; line-height: 1; }
+.status-busy { color: #aab0cf; }
+.status-failed { color: #ff8a84; cursor: help; }
+.status-done { color: #62d3a2; text-decoration: none; }
+a.status-done:hover { text-decoration: underline; }
+
+.publish-failures {
+  margin: 0;
+  padding: 12px 16px 12px 32px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #ffc4c0;
+  background: rgba(215, 60, 55, 0.12);
+  border: 1px solid rgba(215, 60, 55, 0.34);
+  border-radius: var(--radius);
+}
+
+.publish-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ---------- schedule (functional; design to follow) ---------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.publish-when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 13px;
+}
+.publish-when label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.publish-when input[type='datetime-local'] { font: inherit; padding: 4px 6px; }
+
+.scheduled-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-x: auto;
+}
+.scheduled-head { display: flex; align-items: center; justify-content: space-between; }
+.scheduled-list table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.scheduled-list th,
+.scheduled-list td { text-align: left; padding: 8px 10px; vertical-align: top; }
+.scheduled-list tbody tr + tr td { border-top: 1px solid rgba(127, 127, 127, 0.2); }
+.scheduled-error { margin-top: 4px; font-size: 12px; opacity: 0.8; max-width: 48ch; }
+.scheduled-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.scheduled-empty { margin: 0; font-size: 13px; opacity: 0.7; }
+
+.muted { color: var(--text-4); }
+
+/* ---------- spinner ---------- */
+
+.spinner {
+  width: 13px;
+  height: 13px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  opacity: 0.85;
+  flex: none;
+}
+
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 2s; }
+  .btn, .theme-toggle, .niche-input, .post-editor, .brief-input { transition: none; }
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 760px) {
+  .header-inner { padding: 14px 18px; gap: 14px; }
+  .wordmark-glyph { width: 30px; height: 30px; }
+  .wordmark-text { font-size: 17px; }
+  .main { padding: 24px 18px 56px; }
+  .niche-bar { grid-template-columns: 1fr; }
+  .niche-label { display: none; }
+  .panel { padding: 18px; }
+  .brand-images { grid-template-columns: 1fr; }
+  .image-frame-wide { aspect-ratio: 1200 / 627; }
+  .brand-picker-button { max-width: 100%; }
+  .publish-row { grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); padding: 10px 12px; }
+  .publish-logo { display: none; }
+  .publish-actions .btn-primary { width: 100%; justify-content: center; }
+}
+
+/* ---------- brand loader ---------- */
+
+/* The square logo mark, turning. One full rotation, then a beat held still,
+   then another — the pause is what keeps it from reading as a spinner. The
+   mark is square and symmetric enough that it lands back on itself. */
+.brand-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 13.5px;
+}
+
+.brand-loader-mark {
+  position: relative;
+  display: block;
+  line-height: 0;
+}
+
+/* A soft accent bloom under the mark, breathing on the same clock. */
+.brand-loader-mark::before {
+  content: '';
+  position: absolute;
+  inset: -34%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--brand) 0%, transparent 68%);
+  opacity: 0.16;
+  animation: mark-bloom 2.4s ease-in-out infinite;
+}
+
+.brand-loader-mark img {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: block;
+  animation: mark-tumble 2.4s cubic-bezier(0.62, 0.02, 0.32, 1) infinite;
+}
+
+.brand-loader-lg .brand-loader-mark img { width: 62px; height: 62px; }
+.brand-loader-lg { font-size: 14px; }
+
+.brand-loader-label { color: var(--text-2); font-weight: 560; }
+.brand-loader-sub { color: var(--text-4); font-size: 12px; }
+
+@keyframes mark-tumble {
+  0%   { transform: rotate(0deg) scale(0.97); }
+  8%   { transform: rotate(0deg) scale(0.92); }
+  62%  { transform: rotate(360deg) scale(1); }
+  74%  { transform: rotate(360deg) scale(0.97); }
+  100% { transform: rotate(360deg) scale(0.97); }
+}
+
+@keyframes mark-bloom {
+  0%, 100% { opacity: 0.10; transform: scale(0.9); }
+  55%      { opacity: 0.24; transform: scale(1.06); }
+}
+
+/* The loader standing in for a panel's body while its content is being made. */
+.panel-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 26px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunk);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-loader-mark img { animation-duration: 6s; }
+  .brand-loader-mark::before { animation: none; opacity: 0.14; }
+}

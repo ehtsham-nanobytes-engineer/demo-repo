@@ -1,0 +1,198 @@
+/* Two palettes from one set of names.
+ *
+ * Post Studio's own colours: an indigo-to-violet accent on cool slate
+ * neutrals. The publishing brands (NBT, PayProNext, TaxProNext) never colour
+ * the chrome — they appear only on their images and in the publish grid. The
+ * blue is LinkedIn's, used only where the UI refers to LinkedIn itself.
+ *
+ * Brand tokens are identical in both themes; only the surface, text and
+ * accent tokens swap, so a component never needs to know which theme runs.
+ * `data-theme` on <html> is the switch. The default follows the system.
+ */
+
+:root {
+  /* Brand — identical in both themes. White text passes AA on all three. */
+  --brand: #6366f1;
+  --brand-strong: #4f46e5;
+  --brand-deep: #4338ca;
+  --brand-alt: #8b5cf6;
+  --ink: #161a35;
+  --linkedin: #0a66c2;
+
+  --radius: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* The preview is set in a face close to LinkedIn's own, so the line breaks a
+     reviewer approves are the ones the feed will show. */
+  --font-post: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* ---- light (default) ---- */
+  --bg: #f3f4f9;
+  --bg-tint-a: rgba(99, 102, 241, 0.11);
+  --bg-tint-b: rgba(139, 92, 246, 0.08);
+  --dots: rgba(22, 26, 53, 0.08);
+
+  --surface: #ffffff;
+  --surface-2: #f7f8fc;
+  --surface-sunk: #f1f3f9;
+
+  --text: #0f1530;
+  --text-2: #353c5c;
+  --text-3: #626a8a;
+  --text-4: #8f96b3;
+
+  --line: #e2e5f0;
+  --line-strong: #cdd2e3;
+
+  --accent: var(--brand-strong);
+  --accent-text: var(--brand-deep);
+  --accent-soft: #eef0ff;
+  --accent-line: #c9cdfc;
+  --on-accent: #ffffff;
+
+  --danger: #c0262d;
+  --danger-soft: #fdf0f1;
+  --danger-line: #f4c9cc;
+  --ok: #15795a;
+  --ok-soft: #eaf8f2;
+  --ok-line: #bde5d5;
+  --warn: #b45309;
+
+  --shadow-sm: 0 1px 2px rgba(22, 26, 53, 0.06);
+  --shadow: 0 1px 2px rgba(22, 26, 53, 0.05), 0 10px 28px rgba(22, 26, 53, 0.07);
+  --shadow-lg: 0 2px 6px rgba(22, 26, 53, 0.08), 0 22px 56px rgba(22, 26, 53, 0.13);
+
+  color-scheme: light;
+}
+
+/* ---- dark ----
+   Defined twice on purpose: once for the system default, once for an explicit
+   choice, so the toggle wins in both directions. */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0c18;
+    --bg-tint-a: rgba(99, 102, 241, 0.16);
+    --bg-tint-b: rgba(139, 92, 246, 0.11);
+    --dots: rgba(255, 255, 255, 0.05);
+
+    --surface: #12152a;
+    --surface-2: #181c35;
+    --surface-sunk: #0e1122;
+
+    --text: #e9ebf8;
+    --text-2: #c2c6de;
+    --text-3: #8d93b2;
+    --text-4: #6b7192;
+
+    --line: #242944;
+    --line-strong: #323859;
+
+    --accent: #818cf8;
+    --accent-text: #a5b4fc;
+    --accent-soft: rgba(129, 140, 248, 0.14);
+    --accent-line: rgba(129, 140, 248, 0.36);
+    --on-accent: #ffffff;
+
+    --danger: #ff8a90;
+    --danger-soft: rgba(225, 60, 70, 0.12);
+    --danger-line: rgba(225, 60, 70, 0.34);
+    --ok: #5fd4a8;
+    --ok-soft: rgba(45, 185, 130, 0.12);
+    --ok-line: rgba(45, 185, 130, 0.32);
+    --warn: #fbbf24;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.4), 0 22px 56px rgba(0, 0, 0, 0.55);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a0c18;
+  --bg-tint-a: rgba(99, 102, 241, 0.16);
+  --bg-tint-b: rgba(139, 92, 246, 0.11);
+  --dots: rgba(255, 255, 255, 0.05);
+
+  --surface: #12152a;
+  --surface-2: #181c35;
+  --surface-sunk: #0e1122;
+
+  --text: #e9ebf8;
+  --text-2: #c2c6de;
+  --text-3: #8d93b2;
+  --text-4: #6b7192;
+
+  --line: #242944;
+  --line-strong: #323859;
+
+  --accent: #818cf8;
+  --accent-text: #a5b4fc;
+  --accent-soft: rgba(129, 140, 248, 0.14);
+  --accent-line: rgba(129, 140, 248, 0.36);
+  --on-accent: #ffffff;
+
+  --danger: #ff8a90;
+  --danger-soft: rgba(225, 60, 70, 0.12);
+  --danger-line: rgba(225, 60, 70, 0.34);
+  --ok: #5fd4a8;
+  --ok-soft: rgba(45, 185, 130, 0.12);
+  --ok-line: rgba(45, 185, 130, 0.32);
+  --warn: #fbbf24;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.4), 0 22px 56px rgba(0, 0, 0, 0.55);
+
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* The page ground, three layers: an indigo bloom top-left and a violet one
+   top-right — the two ends of the accent — over a faint dot grid. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px 420px at 8% -8%, var(--bg-tint-a), transparent 65%),
+    radial-gradient(760px 380px at 96% -12%, var(--bg-tint-b), transparent 62%),
+    radial-gradient(var(--dots) 1px, transparent 1px);
+  background-size: auto, auto, 24px 24px;
+  pointer-events: none;
+}
+
+button, input, textarea { font-family: inherit; }
+
+::selection { background: var(--accent-soft); color: var(--text); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Scrollbars, so the dark theme does not show a bright trough. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
